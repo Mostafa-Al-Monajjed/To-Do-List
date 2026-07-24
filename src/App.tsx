@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 interface Todo {
   id: number;
@@ -47,80 +48,50 @@ function App() {
   }
 
   return (
-    <div
-      style={{
-        maxWidth: "400px",
-        margin: "50px auto",
-        padding: "20px",
-        textAlign: "center",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1 style={{ textAlign: "center", paddingBottom: "30px" }}>
-        My To Do List
-      </h1>
+    <div className="todo-app">
+      <h1>My To Do List</h1>
 
-      <div>
+      <div className="todo-input-row">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Add a new task..."
-          style={{ width: "70%", padding: "10px", marginRight: "10px" }}
+          className="todo-input"
         />
-        <button onClick={addTodo} style={{ padding: "10px" }}>
+        <button onClick={addTodo} className="add-btn">
           Add
         </button>
       </div>
-      <ul style={{ listStyleType: "none", padding: 0, marginTop: "20px" }}>
+
+      <ul className="todo-list">
         {todos.map((todo) => (
-          <li
-            key={todo.id}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "10px 0",
-              borderBottom: "1px solid #ccc",
-            }}
-          >
-            <span
-              onClick={() => toggleTodo(todo.id)}
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-                cursor: "pointer",
-              }}
-            >
+          <li key={todo.id} className="todo-item">
+            <span className={`todo-text ${todo.completed ? "completed" : ""}`}>
               {todo.text}
             </span>
-            <button
-              onClick={() => toggleTodo(todo.id)}
-              style={{
-                padding: "5px 10px",
-                backgroundColor: todo.completed ? "lightgray" : "lightgreen",
-                border: "none",
-                cursor: "pointer",
-                marginRight: "-140px",
-              }}
-            >
-              {todo.completed ? "Undo" : "Complete"}
-            </button>
-            <button
-              onClick={() => deleteTodo(todo.id)}
-              style={{
-                padding: "5px 10px",
-                backgroundColor: "lightcoral",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Delete
-            </button>
+
+            <div className="todo-buttons">
+              <button
+                onClick={() => toggleTodo(todo.id)}
+                className={`complete-btn ${todo.completed ? "completed" : ""}`}
+              >
+                {todo.completed ? "Undo" : "Complete"}
+              </button>
+
+              <button
+                onClick={() => deleteTodo(todo.id)}
+                className="delete-btn"
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
-      <p>
+
+      <p className="todo-summary">
         Total: {todos.length} | Completed:{" "}
         {todos.filter((t) => t.completed).length}
       </p>
